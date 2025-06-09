@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using MobiliTree.Domain.Models;
 using MobiliTree.Domain.Services;
 
-namespace MobiliTreeApi.Controllers
+namespace MobiliTreeApi.Invoices
 {
     [Route("invoices")]
     [ApiController]
@@ -25,9 +25,12 @@ namespace MobiliTreeApi.Controllers
 
         [HttpGet]
         [Route("{parkingFacilityId}")]
-        public List<Invoice> Get(string parkingFacilityId)
+        public List<InvoiceResponse> Get(string parkingFacilityId)
         {
-            return _invoiceService.GetInvoices(parkingFacilityId);
+            return _invoiceService
+                .GetInvoices(parkingFacilityId)
+                .Select(InvoiceResponse.Load)
+                .ToList();
         }
     }
 }
