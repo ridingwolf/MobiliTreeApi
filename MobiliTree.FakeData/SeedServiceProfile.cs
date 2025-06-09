@@ -2,32 +2,13 @@
 
 namespace MobiliTree.FakeData
 {
-    public static class FakeData
+    public static class SeedServiceProfile
     {
-        public static List<Session> GetSeedSessions() => new List<Session>();
-
-        public static Dictionary<string, Customer> GetSeedCustomers() =>
-            new Dictionary<string, Customer>
-            {
-                {
-                    "c001", new Customer("c001", "John", "pf001")
-                },
-                {
-                    "c002", new Customer("c002", "Sarah", "pf001", "pf002")
-                },
-                {
-                    "c003", new Customer("c003", "Andrea", "pf002")
-                },
-                {
-                    "c004", new Customer("c004", "Peter")
-                }
-            };
-
-        public static Dictionary<string, ServiceProfile> GetSeedServiceProfiles() =>
+        public static Dictionary<string, ServiceProfile> GetAll() =>
             new Dictionary<string, ServiceProfile>
             {
                 {
-                    "pf001",
+                    SeedFacilityId.Facility1,
                     new ServiceProfile
                     {
                         OverrunWeekDaysPrices = new List<TimeslotPrice>
@@ -57,7 +38,7 @@ namespace MobiliTree.FakeData
                     }
                 },
                 {
-                    "pf002",
+                    SeedFacilityId.Facility2,
                     new ServiceProfile
                     {
                         OverrunWeekDaysPrices = new List<TimeslotPrice>

@@ -17,9 +17,9 @@ namespace MobiliTreeApi.Tests
 
         public InvoiceServiceTest()
         {
-            _sessionsRepository = new SessionsRepositoryFake(FakeData.GetSeedSessions());
-            _parkingFacilityRepository = new ParkingFacilityRepositoryFake(FakeData.GetSeedServiceProfiles());
-            _customerRepository = new CustomerRepositoryFake(FakeData.GetSeedCustomers());
+            _sessionsRepository = new SessionsRepositoryFake(SeedSessions.GetAll());
+            _parkingFacilityRepository = new ParkingFacilityRepositoryFake(SeedServiceProfile.GetAll());
+            _customerRepository = new CustomerRepositoryFake(SeedCustomer.GetAll());
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace MobiliTreeApi.Tests
         [Fact]
         public void GivenEmptySessionsStore_WhenQueriedForUnknownParkingFacility_ThenReturnEmptyInvoiceList()
         {
-            var result = GetSut().GetInvoices("pf001");
+            var result = GetSut().GetInvoices(SeedFacilityId.Facility1);
 
             Assert.Empty(result);
         }
@@ -41,19 +41,21 @@ namespace MobiliTreeApi.Tests
         public void GivenOneSessionInTheStore_WhenQueriedForExistingParkingFacility_ThenReturnInvoiceListWithOneElement()
         {
             var startDateTime = new DateTime(2018, 12, 15, 12, 25, 0);
+            var facilityId = SeedFacilityId.Facility1;
+            
             _sessionsRepository.AddSession(new Session
             {
                 CustomerId = "some customer",
-                ParkingFacilityId = "pf001",
+                ParkingFacilityId = facilityId,
                 StartDateTime = startDateTime,
                 EndDateTime = startDateTime.AddHours(1)
             });
 
-            var result = GetSut().GetInvoices("pf001");
+            var result = GetSut().GetInvoices(facilityId);
             
             var invoice = Assert.Single(result);
             Assert.NotNull(invoice);
-            Assert.Equal("pf001", invoice.ParkingFacilityId);
+            Assert.Equal(facilityId, invoice.ParkingFacilityId);
             Assert.Equal("some customer", invoice.CustomerId);
         }
 
@@ -61,78 +63,86 @@ namespace MobiliTreeApi.Tests
         public void GivenMultipleSessionsInTheStore_WhenQueriedForExistingParkingFacility_ThenReturnOneInvoicePerCustomer()
         {
             var startDateTime = new DateTime(2018, 12, 15, 12, 25, 0);
+            var facilityId = SeedFacilityId.Facility1;
+            var customerId = SeedCustomer.John.Id;
+            var otherCustomerId = SeedCustomer.Sarah.Id;
+            
             _sessionsRepository.AddSession(new Session
             {
-                CustomerId = "c001",
-                ParkingFacilityId = "pf001",
+                CustomerId = customerId,
+                ParkingFacilityId = facilityId,
                 StartDateTime = startDateTime,
                 EndDateTime = startDateTime.AddHours(1)
             });
             _sessionsRepository.AddSession(new Session
             {
-                CustomerId = "c001",
-                ParkingFacilityId = "pf001",
+                CustomerId = customerId,
+                ParkingFacilityId = facilityId,
                 StartDateTime = startDateTime,
                 EndDateTime = startDateTime.AddHours(1)
             });
             _sessionsRepository.AddSession(new Session
             {
-                CustomerId = "c002",
-                ParkingFacilityId = "pf001",
+                CustomerId = otherCustomerId,
+                ParkingFacilityId = facilityId,
                 StartDateTime = startDateTime,
                 EndDateTime = startDateTime.AddHours(1)
             });
 
-            var result = GetSut().GetInvoices("pf001");
+            var result = GetSut().GetInvoices(facilityId);
 
             Assert.Equal(2, result.Count);
-            var invoiceCust1 = result.SingleOrDefault(x => x.CustomerId == "c001");
-            var invoiceCust2 = result.SingleOrDefault(x => x.CustomerId == "c002");
+            var invoiceCust1 = result.SingleOrDefault(x => x.CustomerId == customerId);
+            var invoiceCust2 = result.SingleOrDefault(x => x.CustomerId == otherCustomerId);
             Assert.NotNull(invoiceCust1);
             Assert.NotNull(invoiceCust2);
-            Assert.Equal("pf001", invoiceCust1.ParkingFacilityId);
-            Assert.Equal("pf001", invoiceCust2.ParkingFacilityId);
-            Assert.Equal("c001", invoiceCust1.CustomerId);
-            Assert.Equal("c002", invoiceCust2.CustomerId);
+            Assert.Equal(facilityId, invoiceCust1.ParkingFacilityId);
+            Assert.Equal(facilityId, invoiceCust2.ParkingFacilityId);
+            Assert.Equal(customerId, invoiceCust1.CustomerId);
+            Assert.Equal(otherCustomerId, invoiceCust2.CustomerId);
         }
 
         [Fact]
         public void GivenMultipleSessionsForMultipleFacilitiesInTheStore_WhenQueriedForExistingParkingFacility_ThenReturnInvoicesOnlyForQueriedFacility()
         {
             var startDateTime = new DateTime(2018, 12, 15, 12, 25, 0);
+            var requestedFacilityId = SeedFacilityId.Facility1;
+            var customerId = SeedCustomer.John.Id;
+            var otherCustomerId = SeedCustomer.Sarah.Id;
+            
             _sessionsRepository.AddSession(new Session
             {
-                CustomerId = "c001",
-                ParkingFacilityId = "pf001",
+                CustomerId = customerId,
+                ParkingFacilityId = requestedFacilityId,
                 StartDateTime = startDateTime,
                 EndDateTime = startDateTime.AddHours(1)
             });
             _sessionsRepository.AddSession(new Session
             {
-                CustomerId = "c001",
-                ParkingFacilityId = "pf002",
+                CustomerId = customerId,
+                ParkingFacilityId = SeedFacilityId.Facility2,
                 StartDateTime = startDateTime,
                 EndDateTime = startDateTime.AddHours(1)
             });
             _sessionsRepository.AddSession(new Session
             {
-                CustomerId = "c002",
-                ParkingFacilityId = "pf001",
+                CustomerId = otherCustomerId,
+                ParkingFacilityId = requestedFacilityId,
                 StartDateTime = startDateTime,
                 EndDateTime = startDateTime.AddHours(1)
             });
 
-            var result = GetSut().GetInvoices("pf001");
+            var result = GetSut().GetInvoices(requestedFacilityId);
 
             Assert.Equal(2, result.Count);
-            var invoiceCust1 = result.SingleOrDefault(x => x.CustomerId == "c001");
-            var invoiceCust2 = result.SingleOrDefault(x => x.CustomerId == "c002");
+            var invoiceCust1 = result.SingleOrDefault(x => x.CustomerId == customerId);
+            var invoiceCust2 = result.SingleOrDefault(x => x.CustomerId == otherCustomerId);
             Assert.NotNull(invoiceCust1);
             Assert.NotNull(invoiceCust2);
-            Assert.Equal("pf001", invoiceCust1.ParkingFacilityId);
-            Assert.Equal("pf001", invoiceCust2.ParkingFacilityId);
-            Assert.Equal("c001", invoiceCust1.CustomerId);
-            Assert.Equal("c002", invoiceCust2.CustomerId);
+            Assert.Equal(requestedFacilityId, invoiceCust1.ParkingFacilityId);
+            Assert.Equal(requestedFacilityId, invoiceCust2.ParkingFacilityId);
+            Assert.Equal(customerId, invoiceCust1.CustomerId);
+            Assert.Equal(otherCustomerId, invoiceCust2.CustomerId);
         }
 
         private IInvoiceService GetSut()

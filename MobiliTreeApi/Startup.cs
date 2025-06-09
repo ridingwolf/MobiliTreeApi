@@ -33,9 +33,9 @@ namespace MobiliTreeApi
             services.AddTransient<ISessionsRepository, SessionsRepositoryFake>();
             services.AddTransient<ICustomerRepository, CustomerRepositoryFake>();
             services.AddTransient<IParkingFacilityRepository, ParkingFacilityRepositoryFake>();
-            services.AddSingleton(FakeData.GetSeedCustomers());
-            services.AddSingleton(FakeData.GetSeedServiceProfiles());
-            services.AddSingleton(FakeData.GetSeedSessions());
+            services.AddSingleton(SeedCustomer.GetAll());
+            services.AddSingleton(SeedServiceProfile.GetAll());
+            services.AddSingleton(SeedSessions.GetAll());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
