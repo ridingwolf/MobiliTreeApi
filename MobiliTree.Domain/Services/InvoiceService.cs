@@ -32,12 +32,16 @@ namespace MobiliTree.Domain.Services
 
             var sessions = _sessionsRepository.GetSessions(parkingFacilityId);
 
-            return sessions.GroupBy(x => x.CustomerId).Select(x => new Invoice
-            {
-                ParkingFacilityId = parkingFacilityId,
-                CustomerId = x.Key,
-                Amount = 0
-            }).ToList();
+            return sessions
+                .GroupBy(session => session.CustomerId)
+                .Select(sessionForCustomer =>
+                    new Invoice
+                    {
+                        ParkingFacilityId = parkingFacilityId,
+                        CustomerId = sessionForCustomer.Key,
+                        Amount = sessionForCustomer.Sum(session => session.Cost)
+                    })
+                .ToList();
         }
 
         public Invoice GetInvoice(string parkingFacilityId, string customerId)
