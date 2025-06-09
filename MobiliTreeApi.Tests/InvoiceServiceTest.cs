@@ -3,6 +3,8 @@ using System.Linq;
 using MobiliTree.Domain.Models;
 using MobiliTree.Domain.Repositories;
 using MobiliTree.Domain.Services;
+using MobiliTree.FakeData;
+using MobiliTree.FakeData.Repositories;
 using Xunit;
 
 namespace MobiliTreeApi.Tests

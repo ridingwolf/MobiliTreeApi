@@ -1,6 +1,7 @@
 ﻿using MobiliTree.Domain.Models;
+using MobiliTree.Domain.Repositories;
 
-namespace MobiliTree.Domain.Repositories
+namespace MobiliTree.FakeData.Repositories
 {
     public class ParkingFacilityRepositoryFake : IParkingFacilityRepository
     {

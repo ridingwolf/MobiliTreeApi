@@ -1,6 +1,6 @@
 ﻿using MobiliTree.Domain.Models;
 
-namespace MobiliTree.Domain.Repositories
+namespace MobiliTree.FakeData
 {
     public static class FakeData
     {

@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MobiliTree.Domain.Repositories;
 using MobiliTree.Domain.Services;
+using MobiliTree.FakeData;
+using MobiliTree.FakeData.Repositories;
 
 namespace MobiliTreeApi
 {

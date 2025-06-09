@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MobiliTree.Domain\MobiliTree.Domain.csproj" />
+    <ProjectReference Include="..\MobiliTree.FakeData\MobiliTree.FakeData.csproj" />
   </ItemGroup>
 
 </Project>
