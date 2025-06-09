@@ -1,0 +1,16 @@
+- no seperation api/domain/data
+- fakes in logic code -> fakes being tested
+- non-typed string ids
+- mutable objects on all lvls api/domain/data
+- calculating invoices on the fly
+  - was the impact of this verified by business?
+  - to be fair, is a simplified domain for an exercise
+- fixed test data
+- implicit facility definition/configuration
+- [POST]session should be split, this would have impact on how logic is implemented
+  - [POST]session/start
+  - [POST]sessen/end
+- primitive obsession
+- repositories called in controller
+- need to have a talk with the product owner about future-proofing the application
+- names could be more explicit / correcter
