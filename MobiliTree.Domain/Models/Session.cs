@@ -6,5 +6,6 @@
         public string CustomerId { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
+        public decimal Cost { get; set; }
     }
 }

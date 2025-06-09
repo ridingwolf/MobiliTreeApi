@@ -24,6 +24,8 @@ namespace MobiliTreeApi
         {
             services.AddMvc();
             services.AddTransient<IInvoiceService, InvoiceService>();
+            services.AddTransient<ISessionService, SessionService>();
+            services.AddTransient<ISessionPriceCalculationService, SessionPriceCalculationService>();
             
             LoadFakeDataServices(services);
         }

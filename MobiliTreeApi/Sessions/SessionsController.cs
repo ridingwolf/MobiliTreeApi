@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MobiliTree.Domain.Repositories;
+using MobiliTree.Domain.Services;
 using MobiliTreeApi.Responses;
 
 namespace MobiliTreeApi.Sessions
@@ -11,23 +12,18 @@ namespace MobiliTreeApi.Sessions
     public class SessionsController : ControllerBase
     {
         private readonly ISessionsRepository _sessionsRepository;
+        private readonly ISessionService _service;
 
-        public SessionsController(ISessionsRepository sessionsRepository)
+        public SessionsController(ISessionsRepository sessionsRepository, ISessionService service)
         {
             _sessionsRepository = sessionsRepository;
+            _service = service;
         }
 
         [HttpPost]
-        public ActionResult Post(CreateSession value)
+        public ActionResult Post(CreateSessionPayload payload)
         {
-            _sessionsRepository.AddSession(
-                new MobiliTree.Domain.Models.Session
-                {
-                    ParkingFacilityId = value.ParkingFacilityId,
-                    CustomerId = value.CustomerId,
-                    StartDateTime = value.StartDateTime,
-                    EndDateTime = value.EndDateTime,
-                });
+            _service.CreateSession(new MobiliTree.Domain.Commands.CreateSession(payload.ParkingFacilityId, payload.CustomerId, payload.StartDateTime, payload.EndDateTime));
             return Ok();
         }
         

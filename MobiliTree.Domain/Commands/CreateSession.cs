@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MobiliTreeApi.Sessions;
+﻿namespace MobiliTree.Domain.Commands;
 
 public record CreateSession(
     string ParkingFacilityId,
