@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using MobiliTreeApi.Domain;
-using MobiliTreeApi.Repositories;
+﻿using MobiliTree.Domain.Models;
+using MobiliTree.Domain.Repositories;
 
-namespace MobiliTreeApi.Services
+namespace MobiliTree.Domain.Services
 {
     public interface IInvoiceService
     {

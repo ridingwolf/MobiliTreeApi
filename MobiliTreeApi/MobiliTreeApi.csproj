@@ -8,4 +8,8 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MobiliTree.Domain\MobiliTree.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

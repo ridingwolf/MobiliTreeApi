@@ -1,4 +1,4 @@
-﻿namespace MobiliTreeApi.Domain
+﻿namespace MobiliTree.Domain.Models
 {
     public class Invoice
     {

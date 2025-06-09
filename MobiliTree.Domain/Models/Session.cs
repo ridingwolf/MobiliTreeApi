@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MobiliTreeApi.Domain
+﻿namespace MobiliTree.Domain.Models
 {
     public class Session
     {

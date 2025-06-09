@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MobiliTreeApi\MobiliTreeApi.csproj" />
+    <ProjectReference Include="..\MobiliTree.Domain\MobiliTree.Domain.csproj" />
   </ItemGroup>
 
 </Project>

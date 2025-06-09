@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace MobiliTreeApi.Domain
+﻿namespace MobiliTree.Domain.Models
 {
     public class Customer
     {

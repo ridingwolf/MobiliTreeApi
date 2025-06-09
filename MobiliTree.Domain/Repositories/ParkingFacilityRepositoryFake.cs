@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using MobiliTreeApi.Domain;
+﻿using MobiliTree.Domain.Models;
 
-namespace MobiliTreeApi.Repositories
+namespace MobiliTree.Domain.Repositories
 {
     public class ParkingFacilityRepositoryFake : IParkingFacilityRepository
     {

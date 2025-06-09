@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
-using MobiliTreeApi.Repositories;
-using MobiliTreeApi.Services;
+using MobiliTree.Domain.Models;
+using MobiliTree.Domain.Repositories;
+using MobiliTree.Domain.Services;
 using Xunit;
 
 namespace MobiliTreeApi.Tests
@@ -38,7 +39,7 @@ namespace MobiliTreeApi.Tests
         public void GivenOneSessionInTheStore_WhenQueriedForExistingParkingFacility_ThenReturnInvoiceListWithOneElement()
         {
             var startDateTime = new DateTime(2018, 12, 15, 12, 25, 0);
-            _sessionsRepository.AddSession(new Domain.Session
+            _sessionsRepository.AddSession(new Session
             {
                 CustomerId = "some customer",
                 ParkingFacilityId = "pf001",
@@ -58,21 +59,21 @@ namespace MobiliTreeApi.Tests
         public void GivenMultipleSessionsInTheStore_WhenQueriedForExistingParkingFacility_ThenReturnOneInvoicePerCustomer()
         {
             var startDateTime = new DateTime(2018, 12, 15, 12, 25, 0);
-            _sessionsRepository.AddSession(new Domain.Session
+            _sessionsRepository.AddSession(new Session
             {
                 CustomerId = "c001",
                 ParkingFacilityId = "pf001",
                 StartDateTime = startDateTime,
                 EndDateTime = startDateTime.AddHours(1)
             });
-            _sessionsRepository.AddSession(new Domain.Session
+            _sessionsRepository.AddSession(new Session
             {
                 CustomerId = "c001",
                 ParkingFacilityId = "pf001",
                 StartDateTime = startDateTime,
                 EndDateTime = startDateTime.AddHours(1)
             });
-            _sessionsRepository.AddSession(new Domain.Session
+            _sessionsRepository.AddSession(new Session
             {
                 CustomerId = "c002",
                 ParkingFacilityId = "pf001",
@@ -97,21 +98,21 @@ namespace MobiliTreeApi.Tests
         public void GivenMultipleSessionsForMultipleFacilitiesInTheStore_WhenQueriedForExistingParkingFacility_ThenReturnInvoicesOnlyForQueriedFacility()
         {
             var startDateTime = new DateTime(2018, 12, 15, 12, 25, 0);
-            _sessionsRepository.AddSession(new Domain.Session
+            _sessionsRepository.AddSession(new Session
             {
                 CustomerId = "c001",
                 ParkingFacilityId = "pf001",
                 StartDateTime = startDateTime,
                 EndDateTime = startDateTime.AddHours(1)
             });
-            _sessionsRepository.AddSession(new Domain.Session
+            _sessionsRepository.AddSession(new Session
             {
                 CustomerId = "c001",
                 ParkingFacilityId = "pf002",
                 StartDateTime = startDateTime,
                 EndDateTime = startDateTime.AddHours(1)
             });
-            _sessionsRepository.AddSession(new Domain.Session
+            _sessionsRepository.AddSession(new Session
             {
                 CustomerId = "c002",
                 ParkingFacilityId = "pf001",

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace MobiliTreeApi.Domain
+﻿namespace MobiliTree.Domain.Models
 {
     public class ServiceProfile
     {

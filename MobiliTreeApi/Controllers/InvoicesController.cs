@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using MobiliTreeApi.Domain;
-using MobiliTreeApi.Services;
+using MobiliTree.Domain.Models;
+using MobiliTree.Domain.Services;
 
 namespace MobiliTreeApi.Controllers
 {

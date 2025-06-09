@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MobiliTreeApi.Repositories;
-using MobiliTreeApi.Services;
+using MobiliTree.Domain.Repositories;
+using MobiliTree.Domain.Services;
 
 namespace MobiliTreeApi
 {
@@ -22,14 +21,19 @@ namespace MobiliTreeApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddTransient<IInvoiceService, InvoiceService>();
+            
+            LoadFakeDataServices(services);
+        }
+
+        private static void LoadFakeDataServices(IServiceCollection services)
+        {
             services.AddTransient<ISessionsRepository, SessionsRepositoryFake>();
             services.AddTransient<ICustomerRepository, CustomerRepositoryFake>();
             services.AddTransient<IParkingFacilityRepository, ParkingFacilityRepositoryFake>();
-            services.AddTransient<IInvoiceService, InvoiceService>();
             services.AddSingleton(FakeData.GetSeedCustomers());
             services.AddSingleton(FakeData.GetSeedServiceProfiles());
             services.AddSingleton(FakeData.GetSeedSessions());
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
