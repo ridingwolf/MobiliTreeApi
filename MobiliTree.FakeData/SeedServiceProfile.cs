@@ -68,5 +68,8 @@ namespace MobiliTree.FakeData
                     }
                 }
             };
+
+        public static ServiceProfile For(string facilityId)
+            => GetAll()[facilityId];
     }
 }

@@ -7,7 +7,7 @@ using MobiliTree.FakeData;
 using MobiliTree.FakeData.Repositories;
 using Xunit;
 
-namespace MobiliTreeApi.Tests
+namespace MobiliTreeApi.Tests.Services
 {
     public class InvoiceServiceTest
     {

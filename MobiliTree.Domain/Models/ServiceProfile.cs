@@ -6,6 +6,17 @@
         public IList<TimeslotPrice> OverrunWeekDaysPrices { get; set; }
         public IList<TimeslotPrice> WeekendPrices { get; set; }
         public IList<TimeslotPrice> OverrunWeekendPrices { get; set; }
+
+        public decimal GetPriceForStart(DateTime start)
+        {
+            var prices = start.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday 
+                ? WeekendPrices
+                : WeekDaysPrices;
+
+            return prices
+                .Single(price => price.StartHour <= start.Hour && start.Hour < price.EndHour)
+                .PricePerHour;
+        }
     }
 
     public class TimeslotPrice

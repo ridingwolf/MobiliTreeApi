@@ -7,7 +7,7 @@ using MobiliTree.FakeData;
 using Moq;
 using Xunit;
 
-namespace MobiliTreeApi.Tests;
+namespace MobiliTreeApi.Tests.Services;
 
 public class GivenACreateSessionCommand
 {
